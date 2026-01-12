@@ -309,7 +309,7 @@ asyncio.run(main())
 ```python
 ws = OxArchiveWs(WsOptions(
     api_key="ox_your_api_key",
-    ws_url="wss://ws.0xarchive.io",  # Optional
+    ws_url="wss://api.0xarchive.io/ws",  # Optional
     auto_reconnect=True,             # Auto-reconnect on disconnect
     reconnect_delay=1.0,             # Initial reconnect delay (seconds)
     max_reconnect_attempts=10,       # Max reconnect attempts

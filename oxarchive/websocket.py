@@ -65,15 +65,32 @@ from .types import (
 
 logger = logging.getLogger("oxarchive.websocket")
 
-DEFAULT_WS_URL = "wss://ws.0xarchive.io"
+DEFAULT_WS_URL = "wss://api.0xarchive.io/ws"
 DEFAULT_PING_INTERVAL = 30
 DEFAULT_RECONNECT_DELAY = 1.0
 DEFAULT_MAX_RECONNECT_ATTEMPTS = 10
 
+# Server idle timeout is 60 seconds. The SDK sends pings every 30 seconds
+# to keep the connection alive. The websockets library also automatically
+# responds to WebSocket protocol-level ping frames from the server.
+
 
 @dataclass
 class WsOptions:
-    """WebSocket connection options."""
+    """WebSocket connection options.
+
+    The server sends WebSocket ping frames every 30 seconds and will disconnect
+    idle connections after 60 seconds. This SDK automatically handles keep-alive
+    by sending application-level pings at the configured interval.
+
+    Attributes:
+        api_key: Your 0xarchive API key
+        ws_url: WebSocket server URL (default: wss://api.0xarchive.io/ws)
+        auto_reconnect: Automatically reconnect on disconnect (default: True)
+        reconnect_delay: Initial reconnect delay in seconds (default: 1.0)
+        max_reconnect_attempts: Maximum reconnection attempts (default: 10)
+        ping_interval: Interval between keep-alive pings in seconds (default: 30)
+    """
 
     api_key: str
     ws_url: str = DEFAULT_WS_URL
